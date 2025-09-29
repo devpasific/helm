@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "qed-scheduler-service.fullname" . }}
+  labels:
+    {{- include "qed-scheduler-service.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "qed-scheduler-service.selectorLabels" . | nindent 4 }}
